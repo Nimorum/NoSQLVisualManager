@@ -104,7 +104,7 @@ class MockClient(AbstractClient):
     def execute_raw_query(self, query):
         """Executes a raw query and returns the results"""
         raise NotImplementedError("Method not implemented for MockClient")
-    
+
     def get_syntax_highlighter(self):
         """Returns a syntax highlighter for the query editor"""
         raise NotImplementedError("Method not implemented for MockClient")
