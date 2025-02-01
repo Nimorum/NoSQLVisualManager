@@ -1,7 +1,7 @@
 
 class BusinessManager:
     def __init__(self, repository):
-            self.repository = repository
+        self.repository = repository
 
     def connect(self):
         """Connects to MongoDB using the provided URI"""
@@ -22,7 +22,7 @@ class BusinessManager:
         """Fetches documents from a collection"""
         self.repository.set_database_name(database_name)
         return self.repository.fetch_documents(collection_name, order_by, sort_order, query, limit, skip)
-    
+
     def insert_document(self, database_name, collection_name, document):
         """Inserts a document into a collection"""
         self.repository.set_database_name(database_name)
@@ -45,14 +45,14 @@ class BusinessManager:
             else:
                 # Fallback to the raw value if no converter is defined
                 converted_document[field] = value
-                
+
         return self.repository.insert_document(collection_name, converted_document)
-    
+
     def delete_document(self, database_name, collection_name, document):
         """Deletes a document from a collection"""
         self.repository.set_database_name(database_name)
         return self.repository.delete_document(collection_name, document)
-    
+
     def update_document(self, database_name, collection_name, document, updated_property):
         """Updates a document in a collection"""
         self.repository.set_database_name(database_name)
@@ -72,11 +72,11 @@ class BusinessManager:
         filter_query = {key: value for key, value in document.items() if key != updated_property}
         update_property = {updated_property: value}
         return self.repository.update_document(collection_name, filter_query, update_property)
-    
+
     def execute_raw_query(self, query):
         """Executes a raw query"""
         return self.repository.execute_raw_query(query)
-    
+
     def get_syntax_highlighter(self):
         """Returns the syntax highlighter for the query editor"""
         return self.repository.get_syntax_highlighter()

@@ -1,5 +1,6 @@
 from business.config import Config
 
+
 class Repository:
     def __init__(self, client, database_name):
         """
@@ -8,7 +9,7 @@ class Repository:
         """
         self.client = client
         self.database_name = database_name
-        
+
     def connect(self):
         """Connects to the client"""
         self.client.connect()
@@ -36,27 +37,27 @@ class Repository:
     def list_collections(self):
         """Lists the collections of the database"""
         return self.client.list_collection_names(self.database_name)
-    
+
     def delete_document(self, collection_name, document):
         """Deletes a document from a collection through the client"""
         return self.client.delete_document(self.database_name, collection_name, document)
-    
+
     def update_document(self, collection_name, filter_query, update_query):
         """Updates a document in a collection through the client"""
         return self.client.update_document(self.database_name, collection_name, filter_query, update_query)
-    
+
     def get_type_converters(self):
         """Returns the client's type converters"""
         return self.client.get_type_converters()
-    
+
     def get_collection_schema(self, collection_name, sample_size=10):
         """Returns the schema of a collection"""
         return self.client.get_collection_schema(self.database_name, collection_name, sample_size)
-    
+
     def execute_raw_query(self, query):
         """Executes a raw query through the client"""
         return self.client.execute_raw_query(query)
-    
+
     def get_syntax_highlighter(self):
         """Returns the syntax highlighter for the client"""
         return self.client.get_syntax_highlighter()

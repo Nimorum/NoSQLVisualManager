@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import messagebox
 import bson
 
+
 class AddRowPanel:
     def __init__(self, root, data_types):
         """Initialize the add row panel."""

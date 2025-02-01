@@ -1,4 +1,6 @@
 import tkinter as tk
+
+
 class ConfirmationWindow:
     def __init__(self, root, message):
         """Initialize the confirmation window."""

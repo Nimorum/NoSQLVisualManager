@@ -2,6 +2,7 @@ import json
 import os
 
 class Config:
+
     _instance = None  # Static variable to hold the singleton instance
 
     def __new__(cls, config_file="config.json"):
@@ -67,7 +68,7 @@ class Config:
             list: A list of saved connection strings.
         """
         return self._instance._data.get("connections", [])
-    
+
     def get_last_connection(self):
         """
         Get the last used connections.
@@ -76,8 +77,8 @@ class Config:
             str: last connection used.
         """
         return self._instance._data.get("last_connection_used", "")
-    
-    def set_last_connection(self,connection_string):
+
+    def set_last_connection(self, connection_string):
         """
         Set the last connection string used.
         
@@ -88,7 +89,7 @@ class Config:
             self._instance._data["last_connection_used"] = connection_string
             self._instance._save_config()
 
-    def add_connection(self,connection_string):
+    def add_connection(self, connection_string):
         """
         Add a new connection string to the configuration.
         
@@ -99,7 +100,7 @@ class Config:
             self._instance._data["connections"].append(connection_string)
             self._instance._save_config()
 
-    def remove_connection(self,connection_string):
+    def remove_connection(self, connection_string):
         """
         Remove a connection string from the configuration.
         

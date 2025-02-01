@@ -2,6 +2,7 @@ import tkinter as tk
 import re
 from tkinter import ttk, messagebox
 
+
 class RawQueryWindow:
     def __init__(self, parent, manager):
         """Initialize the Raw Query Window."""
@@ -18,7 +19,7 @@ class RawQueryWindow:
             messagebox.showerror("Error", "Syntax Highlighter not found. or database client not supported.")
             self.window.destroy()
             return
-        
+
         self.keywords = set(self.syntax_highlighter.get("keywords", []))
         self.operators = set(self.syntax_highlighter.get("operators", []))
         self.comment_markers = self.syntax_highlighter.get("comments", [])

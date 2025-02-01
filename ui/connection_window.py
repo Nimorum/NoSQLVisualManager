@@ -2,12 +2,12 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 from business.config import Config
 
+
 class ConnectionWindow:
     def __init__(self, root):
         self.root = root
         self.connection_string = None
         self.is_mock = False
-
         self.setup_ui()
 
     def setup_ui(self):
@@ -20,9 +20,9 @@ class ConnectionWindow:
 
         # Dropdown for saved connections
         self.connection_options = ttk.Combobox(
-            self.root, 
-            values = Config.get_instance().get_connections(), 
-            width=50, 
+            self.root,
+            values = Config.get_instance().get_connections(),
+            width=50,
             state="readonly"
         )
         self.connection_options.pack(pady=5, padx=10)

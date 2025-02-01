@@ -9,9 +9,10 @@ from ui.connection_window import ConnectionWindow
 from business.business_manager import BusinessManager
 from ui.main_window import MainWindow
 
-def main():
 
-    Config("config.json") # Load the configuration file
+def main():
+    # Load the configuration file
+    Config("config.json")
     # Create the window for the connection string
     connection_root = tk.Tk()
     connection_window = ConnectionWindow(connection_root)
@@ -22,7 +23,7 @@ def main():
 
     if not connection_string and not is_mock:
         raise Exception("No connection string provided")
-    
+
     try:
         # Create the database client
         if is_mock:

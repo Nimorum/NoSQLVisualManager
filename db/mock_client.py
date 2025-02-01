@@ -1,6 +1,7 @@
 import ast
 from db.abstract_client import AbstractClient
 
+
 class MockClient(AbstractClient):
     def __init__(self, uri: str = ""):
         self.databases = {
@@ -59,7 +60,7 @@ class MockClient(AbstractClient):
             self.databases[database_name].setdefault(collection_name, []).append(document)
             return len(self.databases[database_name][collection_name]) - 1
         return None
-    
+
     def delete_document(self, database_name, collection_name, document):
         """Deletes simulated documents"""
         if database_name in self.databases:
@@ -69,7 +70,7 @@ class MockClient(AbstractClient):
                     del collection[i]
                     return True
         return False
-    
+
     def update_document(self, database_name, collection_name, filter_query, update_query):
         """Updates simulated documents"""
         if database_name in self.databases:
@@ -79,7 +80,7 @@ class MockClient(AbstractClient):
                     doc.update(update_query)
                     return True
         return False
-    
+
     def get_type_converters(self):
         """Returns a dictionary with data types and associated conversion functions"""
         return {
@@ -88,7 +89,7 @@ class MockClient(AbstractClient):
             bool: lambda value: value.lower() in ["true", "1"],
             str: lambda value: str(value),
         }
-    
+
     def get_collection_schema(self, database_name, collection_name, sample_size=10):
         """Returns the schema of a simulated collection"""
         if database_name in self.databases:
@@ -99,9 +100,11 @@ class MockClient(AbstractClient):
                     schema[field] = type(value)
             return schema
         return {}
-    
+
     def execute_raw_query(self, query):
         """Executes a raw query and returns the results"""
         raise NotImplementedError("Method not implemented for MockClient")
     
-    get_syntax_highlighter = lambda self: None  # No syntax highlighter for mock client
+    def get_syntax_highlighter(self):
+        """Returns a syntax highlighter for the query editor"""
+        raise NotImplementedError("Method not implemented for MockClient")

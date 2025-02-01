@@ -1,7 +1,7 @@
 import mysql.connector
 from mysql.connector import Error
-from business.config import Config
 from db.abstract_client import AbstractClient
+
 
 class MySQLClient(AbstractClient):
     def __init__(self, uri: str = "mysql://root@localhost:3306"):
@@ -115,7 +115,7 @@ class MySQLClient(AbstractClient):
         for row in cursor.fetchall():
             schema[row["Field"]] = row["Type"]
         return schema
-    
+
     def execute_raw_query(self, query):
         """Executes a raw SQL query and returns the results."""
         if not self.connection or not self.connection.is_connected():
@@ -137,7 +137,7 @@ class MySQLClient(AbstractClient):
         except Exception as e:
             # Raise a more descriptive error
             raise Exception(f"Error executing raw query: {e}")
-        
+
     def get_syntax_highlighter(self):
         """Returns a syntax highlighter for the query editor"""
         return {

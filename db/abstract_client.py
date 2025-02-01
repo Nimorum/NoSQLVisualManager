@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 
+
 class AbstractClient(ABC):
     """Abstract class to define the interface of a database client"""
     @abstractmethod
@@ -45,6 +46,7 @@ class AbstractClient(ABC):
     def get_collection_schema(self, database_name, collection_name, sample_size=10):
         """Returns the schema of a collection (or table)"""
         pass
+
     @abstractmethod
     def execute_raw_query(self, query):
         """Executes a raw query and returns the results"""
@@ -54,4 +56,3 @@ class AbstractClient(ABC):
     def get_syntax_highlighter(self):
         """Returns a syntax highlighter for the query editor"""
         pass
-    

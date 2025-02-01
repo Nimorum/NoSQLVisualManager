@@ -5,6 +5,7 @@ from pymongo import MongoClient
 import pymongo
 from db.abstract_client import AbstractClient
 
+
 class MongoDBClient(AbstractClient):
     def __init__(self, uri: str = "mongodb://localhost:27017"):
         self.uri = uri
@@ -30,7 +31,7 @@ class MongoDBClient(AbstractClient):
             raise Exception("Client not connected to MongoDB.")
         db = self.client[database_name]
         return db.list_collection_names()
-    
+
     def fetch_documents(self, database_name, collection_name, order_by=None, sort_order=1, filter_query=None, limit=10, skip=0):
         """Fetches documents from a collection"""
         if not self.client:
@@ -60,14 +61,14 @@ class MongoDBClient(AbstractClient):
         db = self.client[database_name]
         
         return db[collection_name].insert_one(document).inserted_id
-    
+
     def delete_document(self, database_name, collection_name, document):
         """Deletes a document from a collection"""
         if not self.client:
             raise Exception("Client not connected to MongoDB.")
         db = self.client[database_name]
         return db[collection_name].delete_one(document).deleted_count > 0
-    
+
     def update_document(self, database_name, collection_name, filter_query, property):
         """Updates a document in a collection"""
         if not self.client:
@@ -75,7 +76,7 @@ class MongoDBClient(AbstractClient):
         db = self.client[database_name]
         new_values = {"$set": property}
         return db[collection_name].update_one(filter_query, new_values).modified_count > 0
-    
+
     def get_type_converters(self):
         """Returns a dictionary with data types and associated conversion functions"""
 
@@ -88,7 +89,7 @@ class MongoDBClient(AbstractClient):
             str: lambda value: value,
             datetime: lambda value: datetime.fromisoformat(value),
         }
-    
+
     def get_collection_schema(self, database_name, collection_name, sample_size=10):
         """Returns the schema of a collection"""
         if not self.client:
@@ -107,7 +108,7 @@ class MongoDBClient(AbstractClient):
                     # Add new field to schema
                     schema[field] = type(value)
         return schema
-    
+
     def execute_raw_query(self, raw_command):
         """
         Executes a MongoDB operation in the format: database_name.collection_name.operation(params).
@@ -148,7 +149,7 @@ class MongoDBClient(AbstractClient):
                 elif isinstance(params, list):
                     result = method(*params)  # Unpack as multiple positional arguments
                 elif isinstance(params, tuple):
-                # If params are tuple-based (e.g., `update_one`), unpack them
+                    # If params are tuple-based (e.g., `update_one`), unpack them
                     result = method(*params)
                 else:
                     result = method()
@@ -165,14 +166,14 @@ class MongoDBClient(AbstractClient):
                         "deleted_count": getattr(result, "deleted_count", None),
                     }]
 
-                     # Filter out None values for cleaner results
+                    # Filter out None values for cleaner results
                     return attributes
             else:
                 raise ValueError(f"Unsupported operation: {operation}")
 
         except Exception as e:
             raise Exception(f"Error executing raw query: {e}")
-        
+
     def get_syntax_highlighter(self):
         """Returns a syntax highlighter for the query editor"""
         return {
@@ -190,8 +191,8 @@ class MongoDBClient(AbstractClient):
                 "$add", "$subtract", "$multiply", "$divide", "$mod"
             ],
             "comments": {
-                "line": ["//"], 
-                "block": [{"/*": "*/"}] 
+                "line": ["//"],
+                "block": [{"/*": "*/"}]
             },
             "config": {
                 "keyword": {"foreground": "orange", "font": ("Courier", 10, "bold")},
