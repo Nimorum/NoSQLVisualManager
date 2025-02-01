@@ -1,0 +1,96 @@
+name: NoSQL Visual Manager CI
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set Up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.9"
+
+      - name: Install Dependencies
+        run: |
+          python -m venv venv
+          source venv/bin/activate
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run Linter (PEP 8)
+        run: |
+          source venv/bin/activate
+          pip install flake8
+          flake8 --ignore=E501,E203,W503 .
+
+      - name: Run Unit Tests
+        run: |
+          source venv/bin/activate
+          pip install pytest
+          pytest --maxfail=1 --disable-warnings --tb=short
+
+  package-app:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set Up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.9"
+
+      - name: Install Dependencies
+        run: |
+          python -m venv venv
+          source venv/bin/activate
+          pip install -r requirements.txt
+          pip install pyinstaller
+
+      - name: Build Executable
+        run: |
+          source venv/bin/activate
+          pyinstaller --onefile --noconsole main.py --name NoSQLVisualManager
+
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: NoSQLVisualManager
+          path: dist/NoSQLVisualManager*
+
+  release:
+    needs: package-app
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Download Build Artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: NoSQLVisualManager
+          path: dist/
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v1.0.${{ github.run_number }}
+          name: "Release v1.0.${{ github.run_number }}"
+          draft: false
+          prerelease: false
+          files: dist/NoSQLVisualManager*
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
