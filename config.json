@@ -1,0 +1,9 @@
+{
+    "connections": [
+        "mongodb://localhost:27017",
+        "mysql://root@localhost:3306"
+    ],
+    "app_settings": {},
+    "last_connection_used": "mysql://root@localhost:3306",
+    "last_checked_for_updates": null
+}
