@@ -35,13 +35,7 @@ jobs:
           pip install flake8
           flake8 --exclude=venv/,.venv/,__pycache__,site-packages --ignore=E501,E203,W503,E241,E226 .
 
-      #- name: Run Unit Tests
-      #  run: |
-      #    source venv/bin/activate
-      #    pip install pytest
-      #    pytest --maxfail=1 --disable-warnings --tb=short
-
-  package-app:
+  package-app-linux:
     needs: build-and-test
     runs-on: ubuntu-latest
     steps:
@@ -60,28 +54,64 @@ jobs:
           pip install -r requirements.txt
           pip install pyinstaller
 
-      - name: Build Executable
+      - name: Build Executable (Linux)
         run: |
           source venv/bin/activate
           pyinstaller --onefile --noconsole main.py --name NoSQLVisualManager
 
-      - name: Upload Build Artifact
+      - name: Upload Linux Build
         uses: actions/upload-artifact@v4
         with:
-          name: NoSQLVisualManager
-          path: dist/NoSQLVisualManager*
+          name: NoSQLVisualManager-linux
+          path: dist/NoSQLVisualManager
+
+  package-app-windows:
+    needs: build-and-test
+    runs-on: windows-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set Up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.9"
+
+      - name: Install Dependencies
+        run: |
+          python -m venv venv
+          venv\Scripts\activate
+          pip install -r requirements.txt
+          pip install pyinstaller
+
+      - name: Build Executable (Windows)
+        run: |
+          venv\Scripts\activate
+          pyinstaller --onefile --noconsole main.py --name NoSQLVisualManager.exe
+
+      - name: Upload Windows Build
+        uses: actions/upload-artifact@v4
+        with:
+          name: NoSQLVisualManager-windows
+          path: dist/NoSQLVisualManager.exe
 
   release:
-    needs: package-app
+    needs: [package-app-linux, package-app-windows]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      - name: Download Build Artifacts
+      - name: Download Linux Build
         uses: actions/download-artifact@v4
         with:
-          name: NoSQLVisualManager
+          name: NoSQLVisualManager-linux
+          path: dist/
+
+      - name: Download Windows Build
+        uses: actions/download-artifact@v4
+        with:
+          name: NoSQLVisualManager-windows
           path: dist/
 
       - name: Create GitHub Release
