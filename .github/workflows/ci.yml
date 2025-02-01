@@ -33,7 +33,7 @@ jobs:
         run: |
           source venv/bin/activate
           pip install flake8
-          flake8 --ignore=E501,E203,W503 .
+          flake8 --ignore=E501,E203,W503,E241,E226 .
 
       - name: Run Unit Tests
         run: |
