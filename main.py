@@ -42,11 +42,12 @@ def main():
 
         # Start the main interface
         main_root = tk.Tk()
-        app = MainWindow(main_root, manager)  # Pass the manager to the main UI
+        MainWindow(main_root, manager)  # Pass the manager to the main UI
         main_root.mainloop()
     except Exception as e:
         print(f"Error: {e}")
         messagebox.showerror("Error", f"An error occurred: {e}")
+
 
 if __name__ == "__main__":
     main()

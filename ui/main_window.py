@@ -140,7 +140,7 @@ class MainWindow:
         try:
             if not self.selected_db or not self.selected_collection:
                 return
-            
+
             self.selected_document = None
 
             # Clear old columns and data
@@ -194,11 +194,11 @@ class MainWindow:
         if not selected_item:
             messagebox.showerror("Error", "Select a row first")
             return
-        
+
         confirm_dialog = ConfirmationWindow(self.root, "Are you sure you want to delete this row?")
         if not confirm_dialog.show():
             return  # If user cancels, do nothing
-        
+
         try:
             row_index = self.data_table.index(selected_item)
             document = self.documents[row_index]
@@ -265,7 +265,7 @@ class MainWindow:
         # Bind save and cancel events
         entry.bind("<Return>", save_edit)
         entry.bind("<Escape>", cancel_edit)
-    
+
     def sort_column(self, column):
         """Sort the data by the selected column."""
         if not self.documents:

@@ -21,7 +21,7 @@ class ConnectionWindow:
         # Dropdown for saved connections
         self.connection_options = ttk.Combobox(
             self.root,
-            values = Config.get_instance().get_connections(),
+            values=Config.get_instance().get_connections(),
             width=50,
             state="readonly"
         )

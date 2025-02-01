@@ -41,7 +41,7 @@ class MongoDBClient(AbstractClient):
                 filter_query = ast.literal_eval(filter_query)
             except Exception as e:
                 raise ValueError(f"Error parsing filter query: {e}")
-            
+
         db = self.client[database_name]
 
         if order_by:
@@ -51,7 +51,7 @@ class MongoDBClient(AbstractClient):
                         .sort(order_by, s_order)
                         .skip(skip)
                         .limit(limit))
-        
+
         return list(db[collection_name].find(filter_query or {}).skip(skip).limit(limit))
 
     def insert_document(self, database_name, collection_name, document):
@@ -59,7 +59,7 @@ class MongoDBClient(AbstractClient):
         if not self.client:
             raise Exception("Client not connected to MongoDB.")
         db = self.client[database_name]
-        
+
         return db[collection_name].insert_one(document).inserted_id
 
     def delete_document(self, database_name, collection_name, document):
