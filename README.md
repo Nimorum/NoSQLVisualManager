@@ -1,5 +1,9 @@
 # NoSQL Visual Manager
 
+
+**📌 Note: This project is part of a college assignment and is still in its early stages.**  
+**Future improvements may include UI refinements, additional database support, and feature enhancements.**  
+
 The NoSQL Visual Manager is a Python-based GUI tool designed to simplify the management of **both NoSQL and SQL databases**, including **MongoDB** and **MySQL**. The application provides a user-friendly interface to interact with databases, allowing users to run queries, manage collections/tables, and perform CRUD operations visually.
 
 Additionally, the system is extensible, meaning it can support **any database** as long as an implementation of the `AbstractClient` interface is added.
