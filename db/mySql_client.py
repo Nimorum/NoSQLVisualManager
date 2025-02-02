@@ -166,4 +166,3 @@ class MySQLClient(AbstractClient):
                 "operator": {"foreground": "red"},
             }
         )
-

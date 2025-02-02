@@ -201,4 +201,3 @@ class MongoDBClient(AbstractClient):
                 "operator": {"foreground": "red"},
             }
         )
-
