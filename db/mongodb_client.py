@@ -4,6 +4,7 @@ import bson
 from pymongo import MongoClient
 import pymongo
 from db.abstract_client import AbstractClient
+from db.syntax_highlight import syntax_highlight
 
 
 class MongoDBClient(AbstractClient):
@@ -176,29 +177,28 @@ class MongoDBClient(AbstractClient):
 
     def get_syntax_highlighter(self):
         """Returns a syntax highlighter for the query editor"""
-        return {
-            "keywords": [
+        return syntax_highlight(
+            keywords=[
                 "find", "insert_one", "insert_many", "update_one",
                 "update_many", "delete_one", "delete_many", "aggregate",
                 "count_documents", "distinct", "bulk_write", "create_index",
                 "drop_index", "list_indexes", "watch"
             ],
-            "operators": [
+            operators=[
                 "$eq", "$ne", "$gt", "$gte", "$lt", "$lte", "$in", "$nin",
                 "$exists", "$type", "$regex", "$expr", "$mod", "$text", "$search",
                 "$where", "$all", "$size", "$bitsAllSet", "$bitsAnySet",
                 "$and", "$or", "$not",
                 "$add", "$subtract", "$multiply", "$divide", "$mod"
             ],
-            "comments": {
-                "line": ["//"],
-                "block": [{"/*": "*/"}]
-            },
-            "config": {
+            comment_line=["//"],
+            comment_block=[{"/*": "*/"}],
+            config={
                 "keyword": {"foreground": "orange", "font": ("Courier", 10, "bold")},
                 "string": {"foreground": "green"},
                 "number": {"foreground": "blue"},
                 "comment": {"foreground": "gray", "font": ("Courier", 10, "italic")},
                 "operator": {"foreground": "red"},
             }
-        }
+        )
+

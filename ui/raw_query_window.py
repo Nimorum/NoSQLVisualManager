@@ -20,10 +20,10 @@ class RawQueryWindow:
             self.window.destroy()
             return
 
-        self.keywords = set(self.syntax_highlighter.get("keywords", []))
-        self.operators = set(self.syntax_highlighter.get("operators", []))
-        self.comment_markers = self.syntax_highlighter.get("comments", [])
-        self.highlight_config = self.syntax_highlighter.get("config", {})
+        self.keywords = set(self.syntax_highlighter.keywords)
+        self.operators = set(self.syntax_highlighter.operators)
+        self.comment_markers = self.syntax_highlighter.comments
+        self.highlight_config = self.syntax_highlighter.config
 
         self.setup_ui()
 

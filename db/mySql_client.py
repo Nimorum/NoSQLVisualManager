@@ -1,6 +1,7 @@
 import mysql.connector
 from mysql.connector import Error
 from db.abstract_client import AbstractClient
+from db.syntax_highlight import syntax_highlight
 
 
 class MySQLClient(AbstractClient):
@@ -140,8 +141,8 @@ class MySQLClient(AbstractClient):
 
     def get_syntax_highlighter(self):
         """Returns a syntax highlighter for the query editor"""
-        return {
-            "keywords": [
+        return syntax_highlight(
+            keywords=[
                 "SELECT", "FROM", "WHERE", "ORDER BY", "ASC", "DESC", "LIMIT", "OFFSET",
                 "INSERT", "INTO", "VALUES", "DELETE", "UPDATE", "SET",
                 "CREATE", "TABLE", "DROP", "DATABASE", "USE", "SHOW", "DESCRIBE",
@@ -154,16 +155,15 @@ class MySQLClient(AbstractClient):
                 "WHILE", "DO", "END WHILE", "FOR", "DECLARE", "CURSOR", "OPEN", "CLOSE",
                 "COUNT", "SUM", "AVG", "MIN", "MAX", "AS", "IN", "OUT", "INOUT", "RETURN",
             ],
-            "operators": ["=", ">", "<", ">=", "<=", "!=", "AND", "OR"],
-            "comments": {
-                "line": ["--"],
-                "block": [{"/*": "*/"}]
-            },
-            "config": {
+            operators=["=", ">", "<", ">=", "<=", "!=", "AND", "OR"],
+            comment_line=["--"],
+            comment_block=[{"/*": "*/"}],
+            config={
                 "keyword": {"foreground": "blue", "font": ("Courier", 10, "bold")},
                 "string": {"foreground": "darkgreen"},
                 "number": {"foreground": "purple"},
                 "comment": {"foreground": "gray", "font": ("Courier", 10, "italic")},
                 "operator": {"foreground": "red"},
             }
-        }
+        )
+
